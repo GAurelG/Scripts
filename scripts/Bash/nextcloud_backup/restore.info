@@ -1,0 +1,18 @@
+Informations on how to restore the backup don by the other file:)
+example command to restore:
+sudo duplicity --file-to-restore var/snap/nextcloud/common/nextcloud/data/aurelien/files/Documents/Administration/France/ --no-encryption --archive-dir /media/marmotte1/duplicity/cache/ file:///media/marmotte1/albatros02_backup/ /media/marmotte1/backuptest/
+
+this will restore the directory and files in the backup identified by :var/snap/nextcloud/common/nextcloud/data/aurelien/files/Documents/Administration/France/
+in the backup.
+These files will be restored taken from the backup in /media/marmotte1/albatros02backup.
+The directory and files restored will be in the location: /media/marmotte1/backuptest
+
+I use the sudo because the root files are root owned.
+as I am using another `--cache-dir` I need to specify it there.
+If I weren't to specify a --file-to-restore I would restore everything that is in the backup.
+
+The restoration is creating the full path found when you look at the `list-current-files`.
+It is basically re-creating the full path from the backup starting directory.
+In my case I backup from / and exclude lots of things (actually include).
+
+

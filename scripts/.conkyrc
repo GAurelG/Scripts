@@ -1,0 +1,46 @@
+double_buffer yes
+
+# determination de la fenetre, type de fenetre...
+own_window yes
+own_window_type desktop
+own_window_transparent yes
+own_window_argb_visual yes
+
+# temps entre les rafraichissement du conky (en secondes)
+update_interval 1
+
+#nombre d'echantillon pour les moyennes cpu et memoire
+#cpu_avg_sample 5
+#net_avg_sample 3
+
+# parametres de police
+use_xft yes
+xftalpha .1
+override_utf8_locale yes
+draw_shades no
+
+# taille et position
+alignment top_left
+
+#ecart avec le bord x=gauche ou droite; y=haut ou bas
+gap_x 35
+gap_y 75
+
+
+
+TEXT
+# mettre la date: jour de la semaine, numero de jour, mois, annee en petit,
+${color FFFFFF}${font Amaze:pixelsize=30}${time %A} ${voffset 2}${color F4661B}${font Open Sans Regular:italic:pixelsize=30}${time %d} ${voffset -4}${color}${font Amaze:pixelsize=30}${time %B} ${voffset -2}${font Open Sans:italic:pixelsize=30}${color F4661B}${time %Y}
+${color E56D14}${font Janda Cheerful Script:italic:pixelsize=60}${offset 55}${time %H}${color}:${color E56D14}${time %M}
+#${color FF4901}${font Ubuntu:pixelsize=20}${voffset -70}cpu
+
+#couleur plus claires :DF6D14
+# heure
+# utilisation disque
+# utilisation ram
+# cpu
+# réseau: ip public,et ip locale, adresse mac, down et up speed
+# liste des processus (top sur les 5 premiers)
+# nom des utilisateurs
+# météo, prendre exemple sur google conky
+# prendre exemple conky now aussi
