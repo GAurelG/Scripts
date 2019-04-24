@@ -2,9 +2,12 @@
 
 # we use the qpdf tool to unencrypt the files and return an 
 # unencrypted file in the parent folder.
-# to use, just pipe an ls or use a file name as argument
+# to use, /script [PASSWORD] $(ls) in the folder with the encryptded pdfs
+# the first argument *must* be the password!
 
-PASSWORD=
+PASSWORD="${1}"
+
+shift 1
 
 for FN in $*
 do
