@@ -4,24 +4,39 @@
 
 import os
 import tinytag as ttag
+import pandas as pd
 
-FLAC-PATH = "~/SOMETHING"
-MP3-PATH = "~/SOMETHINGELSE"
+FLAC_PATH = '/home/aurelien/ParentsMusic_FLAC/'
+MP3_PATH = '/home/aurelien/Musique_Convertie/ParentsMusic_FLAC/'
 
-results = {}
-
-def get_length(musicpath, flac_path = FLAC-PATH, mp3_path = MP3_PATH):
+def get_length(musicpath, flac_path = FLAC_PATH, mp3_path = MP3_PATH):
     rm_len = len(flac_path)
-    musicname = musicpath[rm_len:]
-    flac_length = ttag.TinyTag.get(os.path.join(flac_path, musicname)).duration
-    mp3_length = ttag.TinyTag.get(os.path.join(mp3_path, musicname)).duration
-    return {musicname : (flac_length, mp3_length, flac_length - mp3 length)}
+    musicname = musicpath[rm_len:-4]
+    musicname_FLAC = musicpath[rm_len:]
+    musicname_MP3 = musicname + "mp3"
+    flac_length = ttag.TinyTag.get(os.path.join(flac_path, musicname_FLAC)).duration
+    mp3_length = ttag.TinyTag.get(os.path.join(mp3_path, musicname_MP3)).duration
+    return {musicname : (flac_length, mp3_length, flac_length - mp3_length)}
 
 for root, dirs, files in os.walk(FLAC_PATH):
     for name in files:
-        print(get_length(os.path.join(root, name)))
+        fullname = os.path.join(root, name)
+        try:
+            results.update(get_length(fullname, FLAC_PATH, MP3_PATH))
+        except:
+            results = get_length(fullname, FLAC_PATH, MP3_PATH)
+data = pd.DataFrame.from_dict(results, 
+                              orient='index',
+                              columns=['flac', 'mp3', 'diff'])
+data.index.name = 'musicname'
+filtered = data[data["diff"] >= 1]
+print("length of the filtered dataframe: {0}\n".format(len(filtered.index)))
+print(filtered.head())
 
+zero_len = data[(data["flac"] < 5) | (data["mp3"] < 5)]
+print("\nlength of the dataframe of the musics with no length in mp3 or flac: {}\n".format(len(zero_len.index)))
 
-# go through the filesystem for FLAC and MP3 structure
-# for each file in each side, populate a table row with:
-# path as key, one column for MP3 length one column for FLAC
+print(data.describe())
+print("\n")
+
+print(data.head())
